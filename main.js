@@ -2,28 +2,46 @@
 const REQUEST_URL = 'https://reqres.in/api/unknown?per_page=12';
 const TABLE_BODY = document.querySelector(".table__body");
 const FORM = document.querySelector(".main-form");
+const BTN_RESET = document.querySelector(".reset");
 let content;
-let newContent;
+let contentData;
+
 async function getResponce() {
   let responce = await fetch(REQUEST_URL);
   content = await responce.json();
-  newContent = content.data;
-  console.log(newContent);
-  for (let key in newContent) {
+  contentData = content.data;
+  for (let key in contentData) {
     TABLE_BODY.innerHTML += `
-    <tr><td class="id">${newContent[key].id}</td>
-    <td class="name">${newContent[key].name}</td>
-    <td class="year">${newContent[key].year}</td>
-    <td class="color">${newContent[key].color}</td>
-    <td class="pantone_value">${newContent[key].pantone_value}</td>
+    <tr><td class="id">${contentData[key].id}</td>
+    <td class="name">${contentData[key].name}</td>
+    <td class="year">${contentData[key].year}</td>
+    <td class="color">${contentData[key].color}</td>
+    <td class="pantone_value">${contentData[key].pantone_value}</td>
     </tr>`
-    console.log(newContent[key])
+  }
+};
+
+function getClassName(evt) {
+  return evt.target.closest("th").className;
+}
+
+function classToString(evt) {
+  return ('.' + getClassName(evt));
+}
+
+function toggleForm(evt) {
+  let classItems = document.querySelectorAll(classToString(evt));
+  for (let i = 0; i < classItems.length; i++) {
+    classItems[i].classList.add("hidden");
   }
 }
 
-function toggleForm() {
+/* function getFormStatus() {
+  let status = document.querySelectorAll(".main");
+  for (let i = 0; i < status.length; i++) {
+    if (status[i].classList.contains("hidden")) {BTN_RESET.removeAttribute("disabled")};
+  }
+} */
 
-}
-
-getResponce();
+document.addEventListener("DOMContentLoaded", getResponce);
 FORM.addEventListener("change", toggleForm);
