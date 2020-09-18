@@ -1,5 +1,5 @@
 'use strict';
-const REQUEST_URL = 'https://reqres.in/api/unknown?per_page=12';
+const REQUEST_URL = 'https://api.mocki.io/v1/3442f47c';
 const TABLE_BODY = document.querySelector(".table__body");
 const FORM = document.querySelector(".main-form");
 const BTN_RESET = document.querySelector(".reset");
@@ -26,14 +26,18 @@ function getClassName(evt) {
 }
 
 function classToString(evt) {
-  return ('.' + getClassName(evt));
+  console.log(getClassName(evt))
+  return `.${getClassName(evt)}`;
 }
 
 function toggleForm(evt) {
   let classItems = document.querySelectorAll(classToString(evt));
-  for (let i = 0; i < classItems.length; i++) {
-    classItems[i].classList.add("hidden");
+  for (let key in classItems) {
+    classItems[key].classList.add("hidden");
   }
+  /* for (let i = 0; i < classItems.length; i++) {
+    classItems[i].classList.add("hidden");
+  } */
 }
 
 /* function getFormStatus() {
