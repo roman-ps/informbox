@@ -5,11 +5,13 @@ const FORM = document.querySelector(".main-form");
 const BTN_RESET = document.querySelector(".reset");
 let content;
 let contentData;
+let dataJSON = [];
 
 async function getResponce() {
   let responce = await fetch(REQUEST_URL);
   content = await responce.json();
   contentData = content.data;
+  toLocalStorage(contentData)
   for (let key in contentData) {
     TABLE_BODY.innerHTML += `
     <tr><td class="id">${contentData[key].id}</td>
@@ -21,31 +23,48 @@ async function getResponce() {
   }
 };
 
+function toLocalStorage(content) {
+  dataJSON = JSON.stringify(content);
+  localStorage.setItem("data", dataJSON);
+}
+
+function fromLocalStorage() {
+  return JSON.parse(localStorage.getItem("data"));
+}
+
 function getClassName(evt) {
   return evt.target.closest("th").className;
 }
 
 function classToString(evt) {
-  console.log(getClassName(evt))
   return `.${getClassName(evt)}`;
 }
 
 function toggleForm(evt) {
   let classItems = document.querySelectorAll(classToString(evt));
-  for (let key in classItems) {
+  /* for (let key in classItems) {
     classItems[key].classList.add("hidden");
-  }
-  /* for (let i = 0; i < classItems.length; i++) {
-    classItems[i].classList.add("hidden");
   } */
+  for (let i = 0; i < classItems.length; i++) {
+    classItems[i].classList.add("hidden");
+  }
+  getFormStatus();
 }
 
-/* function getFormStatus() {
-  let status = document.querySelectorAll(".main");
+function getFormStatus() {
+  let status = document.querySelectorAll("th");
   for (let i = 0; i < status.length; i++) {
-    if (status[i].classList.contains("hidden")) {BTN_RESET.removeAttribute("disabled")};
+    if (status[i].classList.contains("hidden")) BTN_RESET.removeAttribute("disabled");
   }
-} */
+}
+
+function reset() {
+  let items = document.querySelectorAll("hidden");
+  for (let i = 0; i < items.length; i++) {
+    items[i].classList.remove("hidden");
+  }
+}
 
 document.addEventListener("DOMContentLoaded", getResponce);
 FORM.addEventListener("change", toggleForm);
+BTN_RESET.addEventListener("click", reset);
