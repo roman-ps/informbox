@@ -1,4 +1,5 @@
 'use strict';
+
 const REQUEST_URL = 'https://api.mocki.io/v1/3442f47c';
 const TABLE_BODY = document.querySelector(".table__body");
 const FORM = document.querySelector(".main-form");
@@ -42,9 +43,6 @@ function classToString(evt) {
 
 function toggleForm(evt) {
   let classItems = document.querySelectorAll(classToString(evt));
-  /* for (let key in classItems) {
-    classItems[key].classList.add("hidden");
-  } */
   for (let i = 0; i < classItems.length; i++) {
     classItems[i].classList.add("hidden");
   }
