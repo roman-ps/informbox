@@ -57,7 +57,7 @@ function getFormStatus() {
 }
 
 function reset() {
-  let items = document.querySelectorAll("hidden");
+  let items = document.querySelectorAll(".hidden");
   for (let i = 0; i < items.length; i++) {
     items[i].classList.remove("hidden");
   }
